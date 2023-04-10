@@ -1,18 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Counter} from "./Counter";
-import {v1} from "uuid";
-import s from "./Counter.module.css";
-
-// export type TitlesPropsType = {
-//     id: string
-//     title: string
-// }
 
 function App() {
 
 
-    const [value, setValue] = useState<number>(() => {
+    const [initialValue, setInitialValue] = useState<number>(() => {
         return Number(localStorage.getItem('counterValue')) || 0
     })
 
@@ -21,21 +14,21 @@ function App() {
         let valueAsString = localStorage.getItem("counterValue")
         if (valueAsString) {
             let newValue = JSON.parse(valueAsString)
-            setValue(newValue)
+            setInitialValue(newValue)
         }
     }, [])
 
     useEffect(() => {
-        localStorage.setItem("counterValue", JSON.stringify(value))
-    }, [value])
+        localStorage.setItem("counterValue", JSON.stringify(initialValue))
+    }, [initialValue])
 
 
     const incrHandler = () => {
-        setValue(value + 1)
+        setInitialValue(initialValue + 1)
     }
 
     const resetHandler = () => {
-        setValue(0)
+        setInitialValue(0)
     }
 
 
@@ -43,13 +36,11 @@ function App() {
     return (
         <div className="App">
             <div>
-                {/*<h1>{value}</h1>*/}
-                {/*  <button onClick={incrHandler}>Incr</button>*/}
-                {/*  <button onClick={resetHandler}>Reset</button>*/}
                 <Counter
-                    value={value}
+                    startValue={initialValue}
                     incrHandler={incrHandler}
                     resetHandler={resetHandler}
+
                 />
             </div>
         </div>
